@@ -1,0 +1,67 @@
+unit Sample.Form.Main;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
+  System.Notification, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Objects,
+  Skia, Skia.FMX;
+
+type
+  TFrmMain = class(TForm)
+    NotificationCenter1: TNotificationCenter;
+    Rectangle1: TRectangle;
+    SbCreateNotification: TSpeedButton;
+    SkLabel1: TSkLabel;
+    procedure SbCreateNotificationClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmMain: TFrmMain;
+
+implementation
+
+{$R *.fmx}
+
+procedure TFrmMain.FormCreate(Sender: TObject);
+begin
+
+  {$IFDEF IOS}
+    NotificationCenter1.RequestPermission;
+  {$ENDIF}
+  {$IFDEF ANDROID}
+    NotificationCenter1.RequestPermission;
+  {$ENDIF}
+
+end;
+
+procedure TFrmMain.SbCreateNotificationClick(Sender: TObject);
+begin
+
+  if NotificationCenter1.AuthorizationStatus = TAuthorizationStatus.Authorized then
+  begin
+    var vNotification:= NotificationCenter1.CreateNotification;
+    try
+      vNotification.Name:= 'TEST';
+      vNotification.AlertBody:= 'This is a test notification';
+      vNotification.Title:= 'Test Title';
+      vNotification.EnableSound:= true;
+      //vNotification.FireDate:= aTime;
+      // vNotification.RepeatInterval := TRepeatInterval.Minute;
+
+      NotificationCenter1.PresentNotification(vNotification);
+    finally
+      vNotification.DisposeOf;
+    end;
+  end;
+
+
+end;
+
+end.

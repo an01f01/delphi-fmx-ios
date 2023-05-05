@@ -1,0 +1,45 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 578
+  ClientWidth = 392
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Rectangle1: TRectangle
+    Anchors = [akLeft, akTop, akRight]
+    Fill.Color = claCornflowerblue
+    Position.X = 16.000000000000000000
+    Position.Y = 248.000000000000000000
+    Size.Width = 361.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object SbCreateNotification: TSpeedButton
+      Align = Client
+      Size.Width = 361.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      object SkLabel1: TSkLabel
+        Align = Client
+        Size.Width = 361.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        StyledSettings = [Family, Size]
+        TextSettings.Font.Weight = Semibold
+        TextSettings.FontColor = claWhitesmoke
+        TextSettings.HorzAlign = Center
+        Words = <
+          item
+            Text = 'CREATE NOTIFICATION'
+          end>
+      end
+    end
+  end
+  object NotificationCenter1: TNotificationCenter
+    Left = 8
+    Top = 16
+  end
+end
