@@ -40,6 +40,19 @@ object FrmMain: TFrmMain
       end
     end
   end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    Position.X = 16.000000000000000000
+    Position.Y = 344.000000000000000000
+    Size.Width = 361.000000000000000000
+    Size.Height = 217.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Viewport.Width = 357.000000000000000000
+    Viewport.Height = 213.000000000000000000
+  end
   object NotificationCenter1: TNotificationCenter
     Left = 8
     Top = 16

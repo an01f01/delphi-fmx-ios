@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   System.Notification, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Objects,
-  Skia, Skia.FMX;
+  Skia, Skia.FMX, FMX.Memo.Types, FMX.ScrollBox, FMX.Memo;
 
 type
   TFrmMain = class(TForm)
@@ -14,6 +14,7 @@ type
     RctNotificationButton: TRectangle;
     SbCreateNotification: TSpeedButton;
     SkNotificationLabel: TSkLabel;
+    Memo1: TMemo;
     procedure SbCreateNotificationClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -29,14 +30,31 @@ implementation
 
 {$R *.fmx}
 
+uses
+  System.Permissions;
+
 procedure TFrmMain.FormCreate(Sender: TObject);
 begin
 
   {$IFDEF IOS}
-    NotificationCenter1.RequestPermission;
+    if NotificationCenter1.AuthorizationStatus <> TAuthorizationStatus.Authorized then begin
+      NotificationCenter1.RequestPermission;
+    end;
   {$ENDIF}
   {$IFDEF ANDROID}
-    NotificationCenter1.RequestPermission;
+    if NotificationCenter1.AuthorizationStatus <> TAuthorizationStatus.Authorized then begin
+      NotificationCenter1.RequestPermission;
+    end;
+
+    if PermissionsService.IsPermissionGranted('android.permission.POST_NOTIFICATIONS') <> True then begin
+      PermissionsService.RequestPermissions(['android.permission.POST_NOTIFICATIONS'],
+        procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
+        begin
+          if AGrantResults[0] <> TPermissionStatus.Granted then
+            Memo1.Lines.Add('Please enable notifications for EMA reminders');
+        end
+      );
+    end;
   {$ENDIF}
 
 end;
